@@ -6,7 +6,7 @@ function IndexPage(props) {
   const navigate = useNavigate();
   const handleClickList = useCallback(() => {
     navigate({pathname: 'list'});
-  },[])
+  },[navigate])
 
   const handleClickAdd = useCallback(() => {
     navigate({pathname: 'add'});
