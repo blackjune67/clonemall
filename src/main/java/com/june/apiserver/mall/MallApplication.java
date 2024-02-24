@@ -2,10 +2,10 @@ package com.example.mall;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
 public class MallApplication {
-// * test commit
 	public static void main(String[] args) {
 		SpringApplication.run(MallApplication.class, args);
 	}
