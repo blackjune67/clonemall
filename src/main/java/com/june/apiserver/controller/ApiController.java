@@ -1,4 +1,4 @@
-package com.example.mall.controller;
+package com.june.apiserver.mall.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
