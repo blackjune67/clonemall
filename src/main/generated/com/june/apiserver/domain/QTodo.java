@@ -15,7 +15,7 @@ import com.querydsl.core.types.Path;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QTodo extends EntityPathBase<Todo> {
 
-    private static final long serialVersionUID = -1730833626L;
+    private static final long serialVersionUID = 416625824L;
 
     public static final QTodo todo = new QTodo("todo");
 
