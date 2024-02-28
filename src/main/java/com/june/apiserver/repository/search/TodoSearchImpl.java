@@ -1,7 +1,7 @@
-package com.june.apiserver.mall.repository.search;
+package com.june.apiserver.repository.search;
 
-import com.june.apiserver.mall.domain.QTodo;
-import com.june.apiserver.mall.domain.Todo;
+import com.june.apiserver.domain.QTodo;
+import com.june.apiserver.domain.Todo;
 import com.querydsl.jpa.JPQLQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

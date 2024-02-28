@@ -1,4 +1,4 @@
-package com.june.apiserver.mall;
+package com.june.apiserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

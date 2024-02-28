@@ -1,6 +1,5 @@
-package com.june.apiserver.mall.dto;
+package com.june.apiserver.dto;
 
-import jakarta.persistence.Column;
 import lombok.Data;
 
 import java.time.LocalDate;

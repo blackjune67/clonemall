@@ -1,6 +1,6 @@
-package com.june.apiserver.mall.repository;
+package com.june.apiserver.repository;
 
-import com.june.apiserver.mall.domain.Todo;
+import com.june.apiserver.domain.Todo;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

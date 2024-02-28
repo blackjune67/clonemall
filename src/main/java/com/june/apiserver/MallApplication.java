@@ -1,4 +1,4 @@
-package com.june.apiserver.mall;
+package com.june.apiserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.june.apiserver.mall.domain;
+package com.june.apiserver.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
