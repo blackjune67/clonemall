@@ -24,12 +24,39 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
+    public Long resgister(TodoDto dto) {
+        Todo todo = dtoToEntity(dto);
+        Todo result = todoRepository.save(todo);
+        return result.getTno();
+    }
+
+    @Override
+    public void modify(Todo dto) {
+        // * 데이터베이스에 있는 데이터 가져옴
+        Optional<Todo> result = todoRepository.findById(dto.getTno());
+
+        Todo todo = result.orElseThrow();
+        // * 수정
+        todo.changeTitle(dto.getTitle());
+        todo.changeContent(dto.getContent());
+        todo.changeComplete(dto.isComplete());
+        todo.changeDueDate(dto.getDueDate());
+
+        todoRepository.save(todo);
+    }
+
+    @Override
+    public void remove(Long tno) {
+        todoRepository.deleteById(tno);
+    }
+
+    @Override
     public TodoDto entityToDto(Todo todo) {
         return TodoService.super.entityToDto(todo);
     }
 
     @Override
-    public TodoDto dtoToEntity(TodoDto todoDto) {
+    public Todo dtoToEntity(TodoDto todoDto) {
         return TodoService.super.dtoToEntity(todoDto);
     }
 }

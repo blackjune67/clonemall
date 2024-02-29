@@ -8,6 +8,13 @@ import jakarta.transaction.Transactional;
 public interface TodoService {
     TodoDto get(Long tno);
 
+    Long resgister(TodoDto dto);
+
+    void modify(Todo dto);
+
+    void remove(Long tno);
+
+
     default TodoDto entityToDto(Todo todo) {
         return TodoDto.builder()
                         .title(todo.getTitle())
@@ -17,8 +24,8 @@ public interface TodoService {
                         .build();
     }
 
-    default TodoDto dtoToEntity(TodoDto todoDto) {
-        return TodoDto.builder()
+    default Todo dtoToEntity(TodoDto todoDto) {
+        return Todo.builder()
                 .title(todoDto.getTitle())
                 .content(todoDto.getContent())
                 .complete(todoDto.isComplete())

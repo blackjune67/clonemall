@@ -29,6 +29,10 @@ public class Todo {
         this.title = title;
     }
 
+    public void changeContent(String content) {
+        this.content = content;
+    }
+
     public void changeComplete(boolean complete) {
         this.complete = complete;
     }
