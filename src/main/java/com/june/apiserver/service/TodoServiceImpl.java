@@ -1,10 +1,13 @@
 package com.june.apiserver.service;
 
 import com.june.apiserver.domain.Todo;
+import com.june.apiserver.dto.PageRequestDto;
+import com.june.apiserver.dto.PageResponseDto;
 import com.june.apiserver.dto.TodoDto;
 import com.june.apiserver.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -28,6 +31,12 @@ public class TodoServiceImpl implements TodoService {
         Todo todo = dtoToEntity(dto);
         Todo result = todoRepository.save(todo);
         return result.getTno();
+    }
+
+    @Override
+    public PageResponseDto<TodoDto> getList(PageRequestDto pageRequestDto) {
+        Page<Todo> result =
+        return null;
     }
 
     @Override

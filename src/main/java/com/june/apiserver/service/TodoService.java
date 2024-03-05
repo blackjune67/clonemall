@@ -1,6 +1,8 @@
 package com.june.apiserver.service;
 
 import com.june.apiserver.domain.Todo;
+import com.june.apiserver.dto.PageRequestDto;
+import com.june.apiserver.dto.PageResponseDto;
 import com.june.apiserver.dto.TodoDto;
 import jakarta.transaction.Transactional;
 
@@ -13,6 +15,8 @@ public interface TodoService {
     void modify(Todo dto);
 
     void remove(Long tno);
+
+    PageResponseDto<TodoDto> getList(PageRequestDto pageRequestDto);
 
 
     default TodoDto entityToDto(Todo todo) {
