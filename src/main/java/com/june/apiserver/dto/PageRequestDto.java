@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+//@Builder
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
