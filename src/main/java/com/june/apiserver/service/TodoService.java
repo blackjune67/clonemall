@@ -12,12 +12,11 @@ public interface TodoService {
 
     Long register(TodoDto dto);
 
-    void modify(Todo dto);
+    void modify(TodoDto dto);
 
     void remove(Long tno);
 
     PageResponseDto<TodoDto> getList(PageRequestDto pageRequestDto);
-
 
     default TodoDto entityToDto(Todo todo) {
         return TodoDto.builder()
