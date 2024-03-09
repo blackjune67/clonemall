@@ -1,5 +1,7 @@
 package com.june.apiserver.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
@@ -7,6 +9,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Data
+@AllArgsConstructor
+//@RequiredArgsConstructor
+@Builder(builderMethodName = "withAll")
 public class PageResponseDto<E> {
     // * 진짜 데이터, 목록 데이터
     private List<E> dtoList;
