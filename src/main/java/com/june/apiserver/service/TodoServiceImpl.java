@@ -10,7 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -27,7 +29,7 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public Long resgister(TodoDto dto) {
+    public Long register(TodoDto dto) {
         Todo todo = dtoToEntity(dto);
         Todo result = todoRepository.save(todo);
         return result.getTno();
@@ -35,8 +37,15 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public PageResponseDto<TodoDto> getList(PageRequestDto pageRequestDto) {
-        Page<Todo> result =
-        return null;
+        // JPA
+        Page<Todo> result = todoRepository.search1(pageRequestDto);
+        List<TodoDto> dtoList = result.get().map(this::entityToDto).toList();
+
+        return PageResponseDto.<TodoDto>withAll()
+                .dtoList(dtoList)
+                .pageRequestDto(pageRequestDto)
+                .totalPage(result.getTotalPages())
+                .build();
     }
 
     @Override
