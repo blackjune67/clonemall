@@ -1,5 +1,6 @@
 package com.june.apiserver.service;
 
+import com.june.apiserver.dto.PageRequestDto;
 import com.june.apiserver.dto.TodoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -33,6 +34,18 @@ public class TodoServiceTest {
                 .content("내용입니다")
                 .dueDate(LocalDate.of(2023, 12, 31))
                 .build();
-        log.info("testResgister ={}", todoService.resgister(todoDto));
+        log.info("testRegister ={}", todoService.register(todoDto));
+    }
+
+    @Test
+    @DisplayName("testModify")
+    public void test03() {
+        // given
+        new PageRequestDto();
+        PageRequestDto pageRequestDto = PageRequestDto.builder().page(11).build();
+        log.info("testModify ={}", todoService.getList(pageRequestDto));
+        // when
+
+        // then
     }
 }

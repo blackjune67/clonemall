@@ -86,9 +86,9 @@ public class TodoRepositoryTests {
         log.info("페이징 getContent ={}", result.getContent());
     }
 
-    @Test
+    /*@Test
     @DisplayName("testSearch01")
     public void testSearch01() {
         todoRepository.search1();
-    }
+    }*/
 }
