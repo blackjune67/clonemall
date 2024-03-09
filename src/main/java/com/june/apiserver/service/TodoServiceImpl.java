@@ -49,16 +49,18 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public void modify(Todo dto) {
+    public void modify(TodoDto todoDto) {
         // * 데이터베이스에 있는 데이터 가져옴
-        Optional<Todo> result = todoRepository.findById(dto.getTno());
+        Todo todo = todoRepository.findById(todoDto.getTno()).orElseThrow();
 
-        Todo todo = result.orElseThrow();
+        // ! Optional을 사용하지 않고 코드를 간결하게 리팩토링함
+        /*Optional<Todo> result = todoRepository.findById(todoDto.getTno());
+        Todo todo = result.orElseThrow();*/
         // * 수정
-        todo.changeTitle(dto.getTitle());
-        todo.changeContent(dto.getContent());
-        todo.changeComplete(dto.isComplete());
-        todo.changeDueDate(dto.getDueDate());
+        todo.changeTitle(todoDto.getTitle());
+        todo.changeContent(todoDto.getContent());
+        todo.changeComplete(todoDto.isComplete());
+        todo.changeDueDate(todoDto.getDueDate());
 
         todoRepository.save(todo);
     }
