@@ -10,7 +10,7 @@ import jakarta.transaction.Transactional;
 public interface TodoService {
     TodoDto get(Long tno);
 
-    Long resgister(TodoDto dto);
+    Long register(TodoDto dto);
 
     void modify(Todo dto);
 
