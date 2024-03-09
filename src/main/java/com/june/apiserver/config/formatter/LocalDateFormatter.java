@@ -1,4 +1,4 @@
-package com.june.apiserver.formatter;
+package com.june.apiserver.config.formatter;
 
 import org.springframework.format.Formatter;
 
