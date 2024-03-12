@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long tno;
+    private Long tno;
 
     @Column(length = 500, nullable = false)
     private String title;

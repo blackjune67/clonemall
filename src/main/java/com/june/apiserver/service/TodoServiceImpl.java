@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -32,6 +31,7 @@ public class TodoServiceImpl implements TodoService {
     public Long register(TodoDto dto) {
         Todo todo = dtoToEntity(dto);
         Todo result = todoRepository.save(todo);
+        log.info("result = {}", result);
         return result.getTno();
     }
 

@@ -1,6 +1,7 @@
 package com.june.apiserver.repository;
 
 import com.june.apiserver.domain.Todo;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -28,31 +29,35 @@ public class TodoRepositoryTests {
         log.info("log ={}", todoRepository.getClass().getName());
     }
 
-
     @Test
     @DisplayName("insert")
     public void test02() {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 50; i++) {
             Todo todo = Todo.builder()
                     .title("title" + i)
                     .content("내용" + i)
                     .dueDate(LocalDate.of(2024, 2, 23))
                     .build();
-
-            // when
-            Todo result = todoRepository.save(todo);
+            todoRepository.save(todo);
         }
+    }
+
+    @Test
+    @DisplayName("delete")
+    public void delete() {
         // given
+        todoRepository.deleteById(98L);
+        log.info("delete log ={}", todoRepository.findById(98L));
+        // when
 
         // then
-//        Assertions.assertNotNull(result);
     }
 
     @Test
     @DisplayName("select")
     public void test03() {
         // given
-        Long tno = 1L;
+        Long tno = 32L;
         Optional<Todo> result = todoRepository.findById(tno);
         // when
         Todo todo = result.orElseThrow();
