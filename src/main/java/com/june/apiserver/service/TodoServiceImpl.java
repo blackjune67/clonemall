@@ -5,6 +5,7 @@ import com.june.apiserver.dto.PageRequestDto;
 import com.june.apiserver.dto.PageResponseDto;
 import com.june.apiserver.dto.TodoDto;
 import com.june.apiserver.repository.TodoRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class TodoServiceImpl implements TodoService {
 
     private final TodoRepository todoRepository;
@@ -44,7 +46,7 @@ public class TodoServiceImpl implements TodoService {
         return PageResponseDto.<TodoDto>withAll()
                 .dtoList(dtoList)
                 .pageRequestDto(pageRequestDto)
-                .totalPage(result.getTotalPages())
+                .total(result.getTotalElements())
                 .build();
     }
 

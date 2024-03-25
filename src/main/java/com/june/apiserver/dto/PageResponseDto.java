@@ -3,6 +3,7 @@ package com.june.apiserver.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,7 +12,6 @@ import java.util.stream.IntStream;
 @Data
 @AllArgsConstructor
 //@RequiredArgsConstructor
-@Builder(builderMethodName = "withAll")
 public class PageResponseDto<E> {
     // * 진짜 데이터, 목록 데이터
     private List<E> dtoList;
@@ -20,6 +20,7 @@ public class PageResponseDto<E> {
     private boolean prev, next;
     private int totalCount, prevPage, nextPage, totalPage, current;
 
+    @Builder(builderMethodName = "withAll")
     public PageResponseDto(List<E> dtoList, PageRequestDto pageRequestDto, long total) {
         this.dtoList = dtoList;
         this.pageRequestDto = pageRequestDto;
@@ -32,7 +33,7 @@ public class PageResponseDto<E> {
         int start = end - 9;
 
         // * 진짜 마지막 값
-        int last = (int) Math.ceil(totalCount / (double) pageRequestDto.getSize());
+        int last = (int)(Math.ceil(totalCount / (double) pageRequestDto.getSize()));
 
         // * 끝 번호
         end = end > last ? last : end;
@@ -45,5 +46,8 @@ public class PageResponseDto<E> {
 
         this.prevPage = prev ? start - 1 : 0;
         this.nextPage = next ? end + 1 : 0;
+
+//        this.totalPage = this.pageNumberList.size();
+//        this.current = pageRequestDto.getPage();
     }
 }
