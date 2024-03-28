@@ -6,9 +6,12 @@ import com.june.apiserver.dto.TodoDto;
 import com.june.apiserver.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RequestMapping("/api/todo")
 @RequiredArgsConstructor
@@ -23,7 +26,7 @@ public class ApiController {
     }
 
     @GetMapping("/{tno}")
-    public TodoDto get(@PathVariable("tno") Long tno) {
+    public TodoDto get(@PathVariable(name = "tno") Long tno) {
         log.info("tno = {}", tno);
         return todoService.get(tno);
     }
@@ -42,6 +45,30 @@ public class ApiController {
         /*Map<String, Object> map = new HashMap<>();
         map.put("TNO", tno);
         return map;*/
-        return Map.of("TNO", tno);
+        return Map.of("tno", tno);
+    }
+
+    // * 업데이트1
+    @PutMapping("/{tno}")
+    public Map<String, String> modify(@PathVariable("tno") Long tno, @RequestBody TodoDto todoDto) {
+        log.info("tno = {}", tno);
+        log.info("todoDto = {}", todoDto);
+        todoService.modify(todoDto);
+        return Map.of("result", "success");
+    }
+
+    // * 업데이트2
+    @PutMapping("/{tno}/complete")
+    public ResponseEntity<?> modify2(@PathVariable("tno") Long tno, @RequestBody TodoDto todoDto) {
+        log.info("tno = {}", tno);
+        log.info("todoDto = {}", todoDto);
+        todoService.modify(todoDto);
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "success"));
+    }
+
+    @DeleteMapping("/{tno}")
+    public void remove(@PathVariable("tno") Long tno) {
+        log.info("tno = {}", tno);
+        todoService.remove(tno);
     }
 }
