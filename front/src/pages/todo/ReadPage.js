@@ -29,7 +29,7 @@ function ReadPage(props) {
 
   return (
       <div className={'font-extrabold w-full bg-white mt-6'}>
-        Todo Read Page {tno}
+        {/*Todo Read Page {tno}*/}
 
         <div className="text-2xl">
           Todo Read Page Component
