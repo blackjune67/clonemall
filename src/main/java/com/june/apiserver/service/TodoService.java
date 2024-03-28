@@ -6,7 +6,7 @@ import com.june.apiserver.dto.PageResponseDto;
 import com.june.apiserver.dto.TodoDto;
 import jakarta.transaction.Transactional;
 
-@Transactional
+//@Transactional
 public interface TodoService {
     TodoDto get(Long tno);
 
@@ -20,6 +20,7 @@ public interface TodoService {
 
     default TodoDto entityToDto(Todo todo) {
         return TodoDto.builder()
+                        .tno(todo.getTno())
                         .title(todo.getTitle())
                         .content(todo.getContent())
                         .complete(todo.isComplete())
@@ -29,6 +30,7 @@ public interface TodoService {
 
     default Todo dtoToEntity(TodoDto todoDto) {
         return Todo.builder()
+                .tno(todoDto.getTno())
                 .title(todoDto.getTitle())
                 .content(todoDto.getContent())
                 .complete(todoDto.isComplete())
