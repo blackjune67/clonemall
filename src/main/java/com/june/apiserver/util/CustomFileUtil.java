@@ -7,6 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnailator;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -69,5 +74,46 @@ public class CustomFileUtil {
         }
 
         return uploadNames;
+    }
+
+    public ResponseEntity<Resource> getFile(String fileName) throws RuntimeException {
+        Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
+
+        if(!resource.isReadable()) {
+            // * 이미지가 없으면 아래 기본 이미지로 대체한다.
+            resource = new FileSystemResource(uploadPath + File.separator+"default.jpeg");
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+
+        try {
+            headers.add("Content-Type", Files.probeContentType(resource.getFile().toPath()));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return ResponseEntity.ok().headers(headers).body(resource);
+    }
+
+    public void deleteFiles(List<String> fileNames) {
+        if (fileNames == null || fileNames.isEmpty()) {
+            return;
+        }
+
+        // * 썸네일 삭제
+        fileNames.forEach(fileName -> {
+            String thumbnailFileName = "s_" + fileName;
+
+            Path thumbnailPath = Paths.get(uploadPath, thumbnailFileName);
+            Path filePath = Paths.get(uploadPath, fileName);
+
+            try {
+                Files.deleteIfExists(thumbnailPath);
+                Files.deleteIfExists(filePath);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
     }
 }
