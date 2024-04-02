@@ -18,6 +18,6 @@ export const getList = async (pageParam) => {
 
 export const postAdd = async (todoObj) => {
   const response = await axios.post(`${prefix}/`, todoObj)
-  console.log(`response.data : ${response.data}`, ' : ', response)
+  console.log(`response.data >>> ${response.data}`, ' : ', response)
   return response.data
 }
