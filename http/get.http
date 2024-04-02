@@ -1,3 +1,7 @@
-### HTTP GET
-GET http://localhost:8080/api/todo/
+### HTTP 조회
+GET http://localhost:8080/api/todo/33
+Content-Type: application/json
+
+### HTTP List 조회
+GET http://localhost:8080/api/todo/list?page=2
 Content-Type: application/json

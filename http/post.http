@@ -3,7 +3,23 @@ POST http://localhost:8080/api/todo/
 Content-Type: application/json
 
 {
-  "title": "제목111",
+  "title": "제목002",
   "content": "내용입니다만?",
-  "dueDate": "2021-12-31"
+  "dueDate": "2024-03-25"
 }
+
+### update
+PUT http://localhost:8080/api/todo/32
+#PUT http://localhost:8080/api/todo/1/complete
+Content-Type: application/json
+
+{
+  "tno": 32,
+  "title": "제목 수정",
+  "content": "zzzz으아아아앙",
+  "dueDate": "2024-03-09"
+}
+
+### DELETE
+DELETE http://localhost:8080/api/todo/32
+Content-Type: application/json
