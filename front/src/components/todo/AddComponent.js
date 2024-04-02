@@ -1,4 +1,7 @@
 import React, {useState} from 'react';
+import ResultModal from "../common/resultModal";
+import {postAdd} from "../../api/todoApi";
+import useCustomMove from "../../hooks/useCustomMove";
 
 const initState = {
   title: '',
@@ -6,25 +9,33 @@ const initState = {
   writer: ''
 }
 
-function AddComponent(props) {
+function AddComponent() {
 
   const [todo, setTodo] = useState({...initState});
+
+  const [result, setResult] = useState(null)
+
+  const {moveToList} = useCustomMove()
+
   const handleChangeTodo = (e) => {
-    console.log(`e.target.name : ${e.target.name}, e.target.value : ${e.target.value}`)
     todo[e.target.name] = e.target.value;
     setTodo({...todo});
   }
 
   const handleClickAdd = () => {
-    console.log(todo)
+    postAdd(todo).then(result => {
+      setResult(result.tno)
+      setTodo({...initState})
+    })
+  }
+
+  const closeModal = () => {
+    setResult(null)
+    moveToList()
   }
 
   return (
       <div className="border-2 border-sky-200 mt-10 m-2 p-4">
-
-        {/*/!* 모달 처리 *!/*/}
-
-        {/*{result ? <ResultModal title={'Add Result'} content={`New ${result} Added`} callbackFn={closeModal}/> : <></>}*/}
 
         <div className="flex justify-center">
           <div className="relative mb-4 flex w-full flex-wrap items-stretch">
@@ -73,6 +84,15 @@ function AddComponent(props) {
             </button>
           </div>
         </div>
+
+        {/* Modal */}
+        {result ?
+            <ResultModal
+                title={'Add Result'}
+                content={`New ${result} Added`}
+                callbackFn={closeModal}
+            />
+            : <></>}
       </div>
   );
 }
