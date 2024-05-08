@@ -19,7 +19,7 @@ public class ProductDto {
     private Long pno;
     private String pname;
     private int price;
-    private String pdecs;
+    private String pdesc;
 
     private boolean delFlag;
 
