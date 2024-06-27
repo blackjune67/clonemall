@@ -2,6 +2,8 @@ package com.june.apiserver.repository;
 
 import com.june.apiserver.domain.Product;
 import com.june.apiserver.dto.PageRequestDto;
+import com.june.apiserver.dto.ProductDto;
+import com.june.apiserver.service.ProductService;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -13,9 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest
@@ -23,11 +24,14 @@ class ProductRepositoryTest {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private ProductService productService;
+
     @Test
     public void testInsert() {
         for (int i = 0; i < 20; i++) {
             Product product = Product.builder()
-                    .pname("test상품_"+i)
+                    .pname("test상품_" + i)
                     .pdesc("test description")
                     .price(10000)
                     .build();
@@ -70,5 +74,21 @@ class ProductRepositoryTest {
     public void testSearch() {
         PageRequestDto pageRequestDto = PageRequestDto.builder().build();
         productRepository.searchList(pageRequestDto);
+    }
+
+    @Test
+    public void testRegister() {
+        ProductDto productDto = ProductDto.builder()
+                .pname("새로운 상품")
+                .pdesc("신규 추가 상품입니다.")
+                .price(1000).build();
+
+        productDto.setUploadFileNames(
+                List.of(
+                        UUID.randomUUID() + "_" + "TEst1.jpg",
+                        UUID.randomUUID() + "_" + "TEst2.jpg"
+                ));
+
+        productService.register(productDto);
     }
 }

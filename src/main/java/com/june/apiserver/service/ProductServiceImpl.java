@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,4 +60,57 @@ public class ProductServiceImpl implements ProductService {
                 .pageRequestDto(pageRequestDto)
                 .build();
     }
+
+    @Override
+    public Long register(ProductDto productDto) {
+        Product product = dtoToEntity(productDto);
+        return productRepository.save(product).getPno();
+    }
+
+    @Override
+    public ProductDto get(Long pno) {
+//        entityToDto()
+        Optional<Product> result = productRepository.findById(pno);
+        Product product = result.orElseThrow();
+        return entityToDto(product);
+    }
+
+    private ProductDto entityToDto(Product product) {
+        ProductDto productDto = ProductDto.builder()
+                .pno(product.getPno())
+                .pname(product.getPname())
+                .pdesc(product.getPdesc())
+                .price(product.getPrice())
+                .delFlag(product.isDelFlag())
+                .build();
+
+        List<ProductImage> imageList = product.getImageList();
+
+        if (imageList == null || imageList.isEmpty()) {
+            return productDto;
+        }
+
+        List<String> fileNameList = imageList.stream().map(productImage -> productImage.getFileName()).toList();
+        productDto.setUploadFileNames(fileNameList);
+        return productDto;
+    }
+
+    private Product dtoToEntity(ProductDto productDto) {
+        Product product = Product.builder()
+                .pname(productDto.getPname())
+                .pdesc(productDto.getPdesc())
+                .price(productDto.getPrice())
+                .build();
+
+        List<String> uploadFileNames = productDto.getUploadFileNames();
+
+        if (uploadFileNames == null || uploadFileNames.size() == 0) {
+            return product;
+        }
+
+        uploadFileNames.forEach(product::addImageString);
+        return product;
+    }
+
+
 }
