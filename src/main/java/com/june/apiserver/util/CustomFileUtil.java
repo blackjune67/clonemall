@@ -43,14 +43,14 @@ public class CustomFileUtil {
 
     // * 파일 업로드
     public List<String> saveFiles(List<MultipartFile> files) throws RuntimeException {
-        if(files == null || files.isEmpty()) {
+        if (files == null || files.isEmpty()) {
             return List.of();
         }
 
         List<String> uploadNames = new ArrayList<>();
 
-        for (MultipartFile file : files)  {
-            String savedName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+        for (MultipartFile file : files) {
+            String savedName = UUID.randomUUID() + "_" + file.getOriginalFilename();
 
             Path savePath = Paths.get(uploadPath, savedName);
 
@@ -59,7 +59,7 @@ public class CustomFileUtil {
                 String contentType = file.getContentType();
 
                 //이미지 파일이면 썸네일 생성
-                if(contentType != null || contentType.startsWith("image")) {
+                if (contentType != null || contentType.startsWith("image")) {
                     Path thumnailpath = Paths.get(uploadPath, "s_" + savedName);
                     Thumbnails.of(savePath.toFile()).size(200, 200).toFile(thumnailpath.toFile());
                 }
@@ -76,9 +76,10 @@ public class CustomFileUtil {
     public ResponseEntity<Resource> getFile(String fileName) throws RuntimeException {
         Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
 
-        if(!resource.isReadable()) {
+        if (!resource.isReadable()) {
             // * 이미지가 없으면 아래 기본 이미지로 대체한다.
-            resource = new FileSystemResource(uploadPath + File.separator+"default.jpeg");
+            resource = new FileSystemResource(uploadPath + File.separator + "default.jpeg");
+            log.info("==> default file Create={}", resource);
         }
 
         HttpHeaders headers = new HttpHeaders();
