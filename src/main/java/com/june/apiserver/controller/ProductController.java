@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
@@ -56,5 +57,32 @@ public class ProductController {
     @GetMapping("/{pno}")
     public ProductDto read(@PathVariable("pno") Long pno) {
         return productService.get(pno);
+    }
+
+    @PutMapping("/{pno}")
+    public Map<String, String> modify(@PathVariable("pno") Long pno, ProductDto productDto) {
+        productDto.setPno(pno);
+        ProductDto oldProductDTO = productService.get(pno);
+
+        List<MultipartFile> files = productDto.getFiles();
+        List<String> currentUploadFileNames = fileUtil.saveFiles(files);
+
+        List<String> uploadFileNames = productDto.getUploadFileNames();
+
+        if (currentUploadFileNames != null && !currentUploadFileNames.isEmpty()) {
+            uploadFileNames.addAll(currentUploadFileNames);
+        }
+
+        productService.modify(productDto);
+        List<String> oldFileNames = oldProductDTO.getUploadFileNames();
+        if (oldFileNames != null && !oldFileNames.isEmpty()) {
+            List<String> removeFiles =
+                    oldFileNames.stream().filter(
+                            fileName -> !uploadFileNames.contains(fileName)
+                    ).collect(Collectors.toList());
+
+            fileUtil.deleteFiles(removeFiles);
+        }
+        return Map.of("RESULT", "SUCCESS");
     }
 }

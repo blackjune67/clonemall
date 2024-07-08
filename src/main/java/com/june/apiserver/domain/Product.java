@@ -2,7 +2,6 @@ package com.june.apiserver.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +42,9 @@ public class Product {
         this.pdesc = desc;
     }
 
+    public void changeDelFlag(boolean delFlag) {
+        this.delFlag = delFlag;
+    }
 
     public void addImage(ProductImage productImage) {
         productImage.setOrd(imageList.size());

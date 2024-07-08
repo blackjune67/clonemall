@@ -75,6 +75,26 @@ public class ProductServiceImpl implements ProductService {
         return entityToDto(product);
     }
 
+    @Override
+    public void modify(ProductDto productDto) {
+        Optional<Product> result = productRepository.findById(productDto.getPno());
+
+        Product product = result.orElseThrow();
+
+        product.changePrice(productDto.getPrice());
+        product.changeName(productDto.getPname());
+        product.changeDesc(productDto.getPdesc());
+        product.changeDelFlag(productDto.isDelFlag());
+
+        List<String> uploadFileNames = productDto.getUploadFileNames();
+        product.clearList();
+
+        if (uploadFileNames != null && !uploadFileNames.isEmpty()) {
+            uploadFileNames.forEach(product::addImageString);
+        }
+        productRepository.save(product);
+    }
+
     private ProductDto entityToDto(Product product) {
         ProductDto productDto = ProductDto.builder()
                 .pno(product.getPno())
@@ -104,7 +124,7 @@ public class ProductServiceImpl implements ProductService {
 
         List<String> uploadFileNames = productDto.getUploadFileNames();
 
-        if (uploadFileNames == null || uploadFileNames.size() == 0) {
+        if (uploadFileNames == null || uploadFileNames.isEmpty()) {
             return product;
         }
 
