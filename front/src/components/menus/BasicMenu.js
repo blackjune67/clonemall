@@ -15,6 +15,9 @@ export const BasicMenu = () => {
               <li className={'pr-6 text-2xl'}>
                 <Link to={'/todo/'}>Todo</Link>
               </li>
+              <li className={'pr-6 text-2xl'}>
+                <Link to={'/products/'}>Products</Link>
+              </li>
             </ul>
           </div>
 
