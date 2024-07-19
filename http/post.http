@@ -5,7 +5,7 @@ Content-Type: application/json
 {
   "title": "제목002",
   "content": "내용입니다만?",
-  "dueDate": "2024-03-25"
+  "dueDate": "2024-07-19"
 }
 
 ### update
