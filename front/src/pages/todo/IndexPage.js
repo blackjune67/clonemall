@@ -6,11 +6,11 @@ function IndexPage(props) {
   const navigate = useNavigate();
   const handleClickList = useCallback(() => {
     navigate({pathname: 'list'});
-  },[navigate])
+  }, [navigate])
 
   const handleClickAdd = useCallback(() => {
     navigate({pathname: 'add'});
-  },[navigate])
+  }, [navigate])
 
   return (
       <BasicLayout>
@@ -23,6 +23,7 @@ function IndexPage(props) {
                onClick={handleClickAdd}>ADD
           </div>
         </div>
+
         <div className={'flex flex-wrap w-full'}>
           <Outlet/>
         </div>
