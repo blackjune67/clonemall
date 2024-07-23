@@ -45,7 +45,7 @@ class ProductRepositoryTest {
 
     @Transactional
     @Test
-    public void testDlete() {
+    public void testDelete() {
         Long pno = 2L;
         productRepository.updateToDelete(2L, true);
     }

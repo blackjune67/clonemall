@@ -34,12 +34,10 @@ public class ProductServiceImpl implements ProductService {
         Page<Object[]> result = productRepository.selectList(pageable);
 
         List<ProductDto> dtoList = result.get().map(arr -> {
-            ProductDto productDto = null;
-
             Product product = (Product) arr[0];
             ProductImage productImage = (ProductImage) arr[1];
 
-            ProductDto.builder()
+            ProductDto productDto = ProductDto.builder()
                     .pno(product.getPno())
                     .pname(product.getPname())
                     .pdesc(product.getPdesc())
@@ -97,7 +95,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void remove(Long pno) {
-        productRepository.deleteById(pno);
+//        productRepository.deleteById(pno);
+        productRepository.updateToDelete(pno, true);
     }
 
     private ProductDto entityToDto(Product product) {

@@ -13,8 +13,4 @@ import lombok.*;
 public class ProductImage {
     private String fileName;
     private int ord; // * 순번
-
-    public void setOrd(int ord) {
-        this.ord = ord;
-    }
 }

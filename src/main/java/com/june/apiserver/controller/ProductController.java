@@ -1,5 +1,7 @@
 package com.june.apiserver.controller;
 
+import com.june.apiserver.dto.PageRequestDto;
+import com.june.apiserver.dto.PageResponseDto;
 import com.june.apiserver.dto.ProductDto;
 import com.june.apiserver.service.ProductService;
 import com.june.apiserver.util.CustomFileUtil;
@@ -8,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -54,8 +57,16 @@ public class ProductController {
         return Map.of("result", pno);
     }
 
+    @GetMapping("/list")
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public PageResponseDto<ProductDto> list(PageRequestDto pageRequestDto) {
+        log.info("==> list");
+        return productService.getList(pageRequestDto);
+    }
+
     @GetMapping("/{pno}")
     public ProductDto read(@PathVariable("pno") Long pno) {
+        log.info("==> READ ={}", pno);
         return productService.get(pno);
     }
 
@@ -88,7 +99,9 @@ public class ProductController {
 
     @DeleteMapping("/{pno}")
     public Map<String, String> delete(@PathVariable("pno") Long pno) {
+        log.info("==> DELETE ={}", pno);
         List<String> oldFileNames = productService.get(pno).getUploadFileNames();
+        productService.remove(pno);
         fileUtil.deleteFiles(oldFileNames);
         return Map.of("RESULT", "SUCCESS");
     }
