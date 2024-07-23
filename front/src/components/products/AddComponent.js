@@ -40,7 +40,7 @@ function AddComponent(props) {
             setResult(data.result)
         });
 
-        console.log('==> ', formData)
+        console.log('==> formData : ', formData)
     }
 
     const closeModal = () => {
